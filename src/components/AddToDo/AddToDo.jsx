@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { v4 } from "uuid";
 
 export default function AddToDo({ onAdd }) {
   const [inputValue, setInputValue] = useState("");
@@ -6,7 +7,7 @@ export default function AddToDo({ onAdd }) {
   const handleSubmit = (ev) => {
     ev.preventDefault();
     if (inputValue.trim().length !== 0) {
-      onAdd({ id: "고유값", name: inputValue, status: "active" });
+      onAdd({ id: v4(), name: inputValue, status: "active" });
       setInputValue("");
     }
   };
