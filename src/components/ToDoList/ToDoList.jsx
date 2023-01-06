@@ -3,7 +3,7 @@ import AddToDo from "../AddToDo/AddToDo";
 import { v4 } from "uuid";
 import ToDo from "../ToDo/ToDo";
 
-export default function ToDoList() {
+export default function ToDoList({ filter }) {
   const [todos, setToDos] = useState([
     { id: v4(), name: "장보기", status: "active" },
     { id: v4(), name: "공부하기", status: "active" },
@@ -25,9 +25,33 @@ export default function ToDoList() {
   return (
     <section>
       <ul>
-        {todos.map((item) => (
-          <ToDo item={item} onDelete={handleDelete} onUpdate={handleUpdate} />
-        ))}
+        {filter === "all"
+          ? todos.map((item) => (
+              <ToDo
+                item={item}
+                onDelete={handleDelete}
+                onUpdate={handleUpdate}
+              />
+            ))
+          : filter === "active"
+          ? todos
+              .filter((item) => item.status === "active")
+              .map((item) => (
+                <ToDo
+                  item={item}
+                  onDelete={handleDelete}
+                  onUpdate={handleUpdate}
+                />
+              )) // 액티브상태 필터링
+          : todos
+              .filter((item) => item.status === "completed")
+              .map((item) => (
+                <ToDo
+                  item={item}
+                  onDelete={handleDelete}
+                  onUpdate={handleUpdate}
+                /> // 컴플리트상태 필터링
+              ))}
       </ul>
       <AddToDo onAdd={handleAdd} />
       {/* 
