@@ -3,7 +3,7 @@ import AddToDo from "../AddToDo/AddToDo";
 import { v4 } from "uuid";
 import ToDo from "../ToDo/ToDo";
 
-export default function ToDoList() {
+export default function ToDoList({ filter }) {
   const [todos, setToDos] = useState([
     { id: v4(), name: "장보기", status: "active" },
     { id: v4(), name: "공부하기", status: "active" },
@@ -22,10 +22,11 @@ export default function ToDoList() {
       // 업데이트 된 todo(updatedItem)을 전달받아 기존 해당 todo를 업데이트한다.
     );
   };
+  const filteredItems = getFilteredItems(todos, filter);
   return (
     <section>
       <ul>
-        {todos.map((item) => (
+        {filteredItems.map((item) => (
           <ToDo item={item} onDelete={handleDelete} onUpdate={handleUpdate} />
         ))}
       </ul>
@@ -37,6 +38,14 @@ export default function ToDoList() {
     </section>
   );
 }
+
+const getFilteredItems = (todos, filter) => {
+  if (filter === "all") return todos;
+  if (filter === "active")
+    return todos.filter((item) => item.status === "active");
+  if (filter === "completed")
+    return todos.filter((item) => item.status === "completed");
+};
 
 // 각 ToDo들을 하나의 컴포넌트로 구성하기.
 // -> map을 통해 item을 prop으로 ToDo 컴포넌트에 넘겨 준다.

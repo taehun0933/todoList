@@ -3,12 +3,13 @@ import "./App.css";
 import Header from "./components/Header/Header";
 import ToDoList from "./components/ToDoList/ToDoList";
 
+const filters = ["all", "active", "completed"];
 function App() {
-  const [filter, setFilter] = useState("all");
+  const [filter, setFilter] = useState(filters[0]);
   return (
     <>
-      <Header />
-      <ToDoList />
+      <Header filters={filters} filter={filter} onFilterChange={setFilter} />
+      <ToDoList filter={filter} />
     </>
   );
 }
