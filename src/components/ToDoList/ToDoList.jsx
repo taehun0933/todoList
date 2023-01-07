@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AddToDo from "../AddToDo/AddToDo";
 import { v4 } from "uuid";
 import ToDo from "../ToDo/ToDo";
+import styles from "./ToDoList.module.css";
 
 export default function ToDoList({ filter }) {
   const [todos, setToDos] = useState([
@@ -24,8 +25,8 @@ export default function ToDoList({ filter }) {
   };
   const filteredItems = getFilteredItems(todos, filter);
   return (
-    <section>
-      <ul>
+    <section className={styles.container}>
+      <ul className={styles.list}>
         {filteredItems.map((item) => (
           <ToDo item={item} onDelete={handleDelete} onUpdate={handleUpdate} />
         ))}
